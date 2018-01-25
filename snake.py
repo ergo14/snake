@@ -35,7 +35,7 @@ REFRESH_TIME = 100
 class Master(Canvas):
     """create the game canvas, the snake, the obstacle, keep track of the score"""
     def __init__(self, boss=None):
-        Canvas.__init__(self, boss)
+        super().__init__(boss)
         self.configure(width=WD, height=HT, bg=BG_COLOR)
         self.running = 0
         self.snake = None
@@ -66,7 +66,9 @@ class Master(Canvas):
 
     def redirect(self, event):
         """taking keyboard inputs and moving the snake accordingly"""
-        if 1 == self.running and event.keysym in AXES.keys() and AXES[event.keysym] != AXES[self.direction]:
+        if 1 == self.running and \
+                event.keysym in AXES.keys() and\
+                AXES[event.keysym] != AXES[self.direction]:
             self.current.flag = 0
             self.direction = event.keysym
             self.current = Movement(self, event.keysym)  # a new instance at each turn to avoid confusion/tricking
@@ -110,7 +112,9 @@ class Shape:
 
     def modify(self, a, b):
         self.x, self.y = a, b
-        self.can.coords(self.ref, a - SIZE[self.kind], b - SIZE[self.kind], a + SIZE[self.kind], b + SIZE[self.kind])
+        self.can.coords(self.ref,
+                        a - SIZE[self.kind], b - SIZE[self.kind],
+                        a + SIZE[self.kind], b + SIZE[self.kind])
 
     def delete(self):
         self.can.delete(self.ref)
@@ -146,7 +150,8 @@ class Snake:
 
     def move(self, path):
         """an elementary step consisting of putting the tail of the snake in the first position"""
-        a, b = (self.blocks[-1].x + STEP * path[0]) % WD, (self.blocks[-1].y + STEP * path[1]) % HT
+        a = (self.blocks[-1].x + STEP * path[0]) % WD
+        b = (self.blocks[-1].y + STEP * path[1]) % HT
         if a == self.can.obstacle.x and b == self.can.obstacle.y:  # check if we find food
             self.can.score.increment()
             self.can.obstacle.delete()
