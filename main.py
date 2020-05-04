@@ -2,29 +2,32 @@ import tkinter
 import constants
 import game
 
-root = tkinter.Tk()
-root.title("Snake Game")
 
-game = game.Master(root)
-game.grid(column=1, row=0, rowspan=3)
+if __name__ == "__main__":
+  
+    root = tkinter.Tk()
+    root.title("Snake Game")
 
-root.bind("<Key>", game.redirect)
+    game = game.Master(root)
+    game.grid(column=1, row=0, rowspan=3)
 
-buttons = tkinter.Frame(root, width=35, height=3 * constants.layout["size"] / 5)
+    root.bind("<Key>", game.redirect)
 
-tkinter.Button(buttons, text='Start', command=game.start).grid()
-tkinter.Button(buttons, text='Stop', command=game.clean).grid()
-tkinter.Button(buttons, text='Quit', command=root.destroy).grid()
+    buttons = tkinter.Frame(root, width=35, height=3 * constants.layout["size"] / 5)
 
-buttons.grid(column=0, row=0)
+    tkinter.Button(buttons, text='Start', command=game.start).grid()
+    tkinter.Button(buttons, text='Stop', command=game.clean).grid()
+    tkinter.Button(buttons, text='Quit', command=root.destroy).grid()
 
-scoreboard = tkinter.Frame(root, width=35, height=2 * constants.layout["size"] / 5)
+    buttons.grid(column=0, row=0)
 
-tkinter.Label(scoreboard, text='Game Score').grid()
-tkinter.Label(scoreboard, textvariable=game.score.counter).grid()
-tkinter.Label(scoreboard, text='High Score').grid()
-tkinter.Label(scoreboard, textvariable=game.score.maximum).grid()
+    scoreboard = tkinter.Frame(root, width=35, height=2 * constants.layout["size"] / 5)
 
-scoreboard.grid(column=0, row=2)
+    tkinter.Label(scoreboard, text='Game Score').grid()
+    tkinter.Label(scoreboard, textvariable=game.score.counter).grid()
+    tkinter.Label(scoreboard, text='High Score').grid()
+    tkinter.Label(scoreboard, textvariable=game.score.maximum).grid()
 
-root.mainloop()
+    scoreboard.grid(column=0, row=2)
+
+    root.mainloop()
